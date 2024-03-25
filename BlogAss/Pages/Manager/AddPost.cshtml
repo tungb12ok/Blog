@@ -1,0 +1,76 @@
+﻿@page
+@model BlogAss.Pages.Manager.AddPostModel
+@{
+    FblogContext context = new FblogContext();
+    ViewData["Fields"] = context.Fields.ToList();
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Article</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.js"></script>
+</head>
+<body>
+    <h1>Add Post</h1>
+    <h3 class="text-success">@Model.mess</h3>
+    <form method="post">
+        <div class="form-group">
+            <label for="Title">Title</label>
+            <input asp-for="Article.Title" class="form-control" />
+            <span asp-validation-for="Article.Title" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="ArticleContent">Article Content</label>
+            <textarea asp-for="Article.ArticleContent" class="form-control"></textarea>
+            <span asp-validation-for="Article.ArticleContent" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="FieldId">Field</label>
+            <select asp-for="Article.FieldId" class="form-control" required>
+                <option value="">Select a Field</option>
+                @foreach (var field in ViewData["Fields"] as List<Field>)
+                {
+                    <option value="@field.Id">@field.FieldName</option>
+                }
+            </select>
+            <span asp-validation-for="Article.FieldId" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="Image">Image</label>
+            <input asp-for="Article.Image" class="form-control" />
+            <span asp-validation-for="Article.Image" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="Vote">Vote</label>
+            <div id="rating" class="rateYo"></div>
+            <input asp-for="Article.Vote" id="voteInput" class="form-control" max="5" min="1" />
+            <span asp-validation-for="Article.Vote" class="text-danger"></span>
+        </div>
+
+
+        <button type="submit" class="btn btn-primary">Add Article</button>
+    </form>
+    <script>
+        $(function () {
+            $("#rating").rateYo({
+                starWidth: "20px", // Điều chỉnh kích thước ngôi sao nếu cần
+                rating: 5, // Đặt giá trị mặc định là 5 sao
+                numStars: 5, // Đặt tổng số sao
+                readOnly: false, // Nếu bạn muốn người dùng có thể thay đổi đánh giá
+                onSet: function (rating, rateYoInstance) {
+                    $("#voteInput").val(rating);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

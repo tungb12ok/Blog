@@ -1,0 +1,82 @@
+﻿@page
+@model BlogAss.Pages.FieldModel
+@{
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home page - BlogAss</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" integrity="sha384-xr5Fha3BnTL+eIE7f7wgMOvneN9rBSRRU0DMFlXn/T9UQfUA2wC48f7s5lTI5imq" crossorigin="anonymous">
+</head>
+<body>
+
+
+    <div class="container">
+        <!-- Danh sách các bài viết -->
+        <div class="row">
+            @foreach (var article in Model.Articles)
+            {
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <div class="card">
+                            <img src="@article.Image" class="card-img-top" alt="@article.Title">
+                            <div class="card-body">
+                                <h5 class="card-title">@article.Title</h5>
+                                <p class="card-text">@article.ArticleContent</p>
+                                <a href="@Url.Action("Details", "Article", new { id = article.Id })" class="readmore">Read More</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+
+    <div class="container pagination-sm pagination-lg d-flex justify-content-center">
+        <nav>
+            <ul class="pagination" id="pagination">
+                @for (int i = 1; i <= Model.TotalPages; i++)
+                {
+                    <li class="page-item @(i == Model.PageNumber ? "active" : "")">
+                        <a class="page-link" href="/Field?page=@i&field=@Model.fID">@i</a>
+                    </li>
+                }
+            </ul>
+        </nav>
+    </div>
+    <script>
+        $(document).ready(function () {
+            // Lắng nghe sự kiện click trên các liên kết phân trang
+            $('.pagination li').click(function () {
+                // Xóa lớp 'active' khỏi tất cả các trang
+                $('.pagination li').removeClass('active');
+                $(this).addClass('active'); // Thêm lớp 'active' vào trang hiện tại
+
+                var pageNumber = $(this).find('a').text(); // Lấy số trang từ liên kết
+                fetchDataForPage(pageNumber); // Gọi hàm để tải dữ liệu cho trang mới
+            });
+        });
+
+        function fetchDataForPage(pageNumber) {
+            $.ajax({
+                type: "GET",
+                url: '/Index',
+                data: { page: pageNumber }, // Truyền tham số 'page' bằng Ajax
+                success: function (data) {
+                    // Xử lý dữ liệu trả về từ server, ví dụ cập nhật nội dung trang
+                    // Ví dụ: $('#content').html(data);
+                },
+                error: function (error) {
+                    // Xử lý lỗi (nếu có)
+                }
+            });
+        }
+    </script>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-k11OsIAgZeBplOzOg/GBj4B4jc5I2/HFb1i6OH4US/Cxjc5eGV50F40CZ6F5zn5r" crossorigin="anonymous"></script>
+</body>
+</html>

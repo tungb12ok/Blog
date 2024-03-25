@@ -1,0 +1,87 @@
+﻿@page
+@model BlogAss.Pages.ProfileModel
+@using Microsoft.AspNetCore.Http
+@using Newtonsoft.Json
+@{
+    FblogContext context = new FblogContext();
+    List<Field> lf = context.Fields.ToList();
+    User userEdit = null;
+    if (HttpContext.Session.GetString("UserObject") != null)
+    {
+        userEdit = new DataAccess.Models.User();
+        var userObjectJson = HttpContext.Session.GetString("UserObject");
+        userEdit = JsonConvert.DeserializeObject<User>(userObjectJson);
+    }
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chỉnh sửa hồ sơ</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <div class="row justify-content-center mt-5">
+        <h3 class="text-danger">@Model.Mess</h3>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    Chỉnh sửa hồ sơ
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        <input type="text" name="userId" value="@userEdit.Id" hidden />
+                        <div class="form-group">
+                            <label for="name">Họ và Tên:</label>
+                            <input type="text" class="form-control" id="name" name="name" required value="@userEdit.Name">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email:</label>
+                            <input type="text" class="form-control" id="email" name="email" required value="@userEdit.Email" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number:</label>
+                            <input type="text" class="form-control" id="phone" name="phone" required value="@userEdit.Phonenumber">
+                        </div>
+                        <div class="form-group">
+                            <label for="dateOfBirth">Date of Birth:</label>
+                            <input type="date" class="form-control" id="dateOfBirth" name="dateOfBirth" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="gender">Gender:</label>
+                            <div class="form-check">
+                                <input type="radio" class="form-check-input" id="male" name="gender" value="Male" required @if (userEdit.Gender == "Male") { <text>checked</text> }>
+                                <label class="form-check-label" for="male">Male</label>
+                            </div>
+                            <div class="form-check">
+                                <input type="radio" class="form-check-input" id="female" name="gender" value="Female" required @if (userEdit.Gender == "Female") { <text>checked</text> }>
+                                <label class="form-check-label" for="female">Female</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Mật khẩu:</label>
+                            <input type="password" class="form-control" id="password" name="password" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="re_password">Nhập lại Mật khẩu:</label>
+                            <input type="password" class="form-control" id="re_password" name="re_password" required>
+                        </div>
+                        <select class="form-control" id="field" name="fieldId" required>
+                            <option value="">Select a Field</option>
+                            @foreach (var field in lf)
+                            {
+                                <option value="@field.Id">@field.FieldName</option>
+                            }
+                        </select>
+                        <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,89 @@
+﻿@page
+@model BlogAss.Pages.Manager.ManagerPostModel
+@using DataAccess.Models
+@using Newtonsoft.Json
+@{
+
+    User userEdit = null;
+    if (HttpContext.Session.GetString("UserObject") != null)
+    {
+        userEdit = new DataAccess.Models.User();
+        var userObjectJson = HttpContext.Session.GetString("UserObject");
+        userEdit = JsonConvert.DeserializeObject<User>(userObjectJson);
+    }
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Quản lý bài viết</title>
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-4">
+        <h1>Quản lý bài viết</h1>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Tiêu đề</th>
+                    <th>Tác giả</th>
+                    <th>Trạng thái</th>
+                    <th>Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (Article i in Model.articles)
+                {
+                    <form method="post">
+                    <tr>
+                        <input type="text" value="@i.Id" name="aid" hidden>
+                        <td>@i.Title</td>
+                        <td>@i.User.Name</td>
+
+                            @if (userEdit.RoleId == 2)
+                            {
+                            <td>
+                                <select asp-for="@i.StatusId" name="sId" class="form-control" id="accountType_1">
+                                        @foreach (Status status in Model.ls)
+                                        {
+                                        <option value="@status.StatusId" asp-selected="status.StatusId == i.StatusId" disabled>@status.Status1</option>
+                                        }
+                                </select>
+
+                            </td>
+                            }
+                            else
+                            {
+                            <td>
+                                <select asp-for="@i.StatusId" name="sId" class="form-control" id="accountType_1">
+                                        @foreach (Status status in Model.ls)
+                                        {
+                                        <option value="@status.StatusId" asp-selected="status.StatusId == i.StatusId">@status.Status1</option>
+                                        }
+                                </select>
+
+                            </td>
+                            }
+                        <td>
+                            <a href="/Manager/EditPost?id=@i.Id" class="btn btn-primary">Update</a>
+                                @if (userEdit.RoleId == 2)
+                                {
+                                <a href="/Manager/DeletePost?id=@i.Id" class="btn btn-primary">Delete</a>
+                                }
+                            <button class="btn btn-success" type="submit">Xác nhận</button>
+
+                        </td>
+
+                    </tr>
+                    </form>
+                }
+                <!-- Thêm các dòng khác tại đây cho các bài viết khác -->
+            </tbody>
+        </table>
+    </div>
+
+
+
+</body>
+</html>

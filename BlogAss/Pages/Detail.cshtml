@@ -1,0 +1,73 @@
+﻿@page
+@model DetailModel
+@{
+    ViewData["Title"] = "Detail Page";
+}
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detail Page - BlogAss</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" integrity="sha384-xr5Fha3BnTL+eIE7f7wgMOvneN9rBSRRU0DMFlXn/T9UQfUA2wC48f7s5lTI5imq" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center mt-5 display-4 text-primary">@Model.Article.Title</h1>
+        <div id="detail-content" class="text-center">
+            <img src="@Model.Article.Image" alt="Sample Image" class="w-75"> <!-- Apply w-75 class to resize the image to 75% -->
+            <p>
+                @Model.Article.ArticleContent
+            </p>
+            <div class="star-rating">
+                <div class="star-rating">
+                    @for (int i = 1; i <= Model.Article.Vote; i++)
+                    {
+                        <span class="star filled text-warning">&#9733;</span>
+                    }
+                    
+                </div>
+                
+            </div>
+            
+        </div>
+    </div>
+    <style>
+        .star-rating {
+            font-size: 24px; /* Adjust the size of the stars */
+        }
+
+        .star {
+            color: #FFD700; /* Filled star color (yellow) */
+            margin-right: 5px; /* Adjust spacing between stars */
+        }
+    </style>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const id = urlParams.get("id");
+
+        // Replace this with your actual content retrieval logi
+        const detailedContent = {
+            imageSrc: "https://via.placeholder.com/150", // URL of the image
+            content: "This is the detailed content for the blog post. You can include the full text of the post here.",
+        };
+
+        // Display the detailed content in the "detail-content" div
+        const detailContentDiv = document.getElementById("detail-content");
+        const detailImage = document.createElement("img");
+        detailImage.src = detailedContent.imageSrc;
+        detailImage.alt = "Blog Post Image";
+        detailImage.className = "img-thumbnail"; // Apply Bootstrap's img-thumbnail class for a smaller image
+        detailContentDiv.appendChild(detailImage);
+
+        const detailText = document.createElement("p");
+        detailText.textContent = detailedContent.content;
+        detailContentDiv.appendChild(detailText);
+    </script>
+</body>
+</html>
+

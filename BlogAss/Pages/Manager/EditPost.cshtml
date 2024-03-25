@@ -1,0 +1,76 @@
+﻿@page
+@model BlogAss.Pages.Manager.EditPostModel
+@using Microsoft.AspNetCore.Http
+@using Newtonsoft.Json
+@using BlogAss.Pages
+@{
+    FblogContext context = new FblogContext();
+    ViewData["Fields"] = context.Fields.ToList();
+    ViewData["Statuses"] = context.Statuses.ToList();
+    List<Status> ls = context.Statuses.ToList();
+
+    var list = context.Fields.ToList();
+    User userEdit = null;
+    if (HttpContext.Session.GetString("UserObject") != null)
+    {
+        userEdit = new DataAccess.Models.User();
+        var userObjectJson = HttpContext.Session.GetString("UserObject");
+        userEdit = JsonConvert.DeserializeObject<User>(userObjectJson);
+    }
+
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Tiêu đề và các tài nguyên khác -->
+</head>
+<body>
+    <h1>Update Post</h1>
+    <h3 class="text-success">@Model.mess</h3>
+    <form method="post">
+        <div class="form-group">
+            <label for="Id">Id</label>
+            <input asp-for="Article.Id" class="form-control" readonly/>
+            <span asp-validation-for="Article.Id" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label for="Title">Title</label>
+            <input asp-for="Article.Title" class="form-control" />
+            <span asp-validation-for="Article.Title" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="ArticleContent">Article Content</label>
+            <textarea asp-for="Article.ArticleContent" class="form-control"></textarea>
+            <span asp-validation-for="Article.ArticleContent" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="FieldId">Field</label>
+            <select asp-for="Article.FieldId" class="form-control" required>
+                <option value="">Select a Field</option>
+                @foreach (var field in ViewData["Fields"] as List<Field>)
+                {
+                    <option value="@field.Id">@field.FieldName</option>
+                }
+            </select>
+            <span asp-validation-for="Article.FieldId" class="text-danger"></span>
+        </div>
+        
+        <div class="form-group">
+            <label for="Image">Image</label>
+            <input asp-for="Article.Image" class="form-control" />
+            <span asp-validation-for="Article.Image" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="Vote">Vote</label>
+            <div id="rating" class="rateYo"></div>
+            <input asp-for="Article.Vote" id="voteInput" class="form-control" max="5" min="1" />
+            <span asp-validation-for="Article.Vote" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+    </form>
+</body>
+</html>

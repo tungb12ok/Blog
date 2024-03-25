@@ -1,0 +1,83 @@
+﻿@page
+@model BlogAss.Pages.Manager.ManagerAccountModel
+@{
+    FblogContext context = new FblogContext();
+    List<User> listU = context.Users.Where(u => u.RoleId != 1).ToList();
+}
+@using DataAccess.Models
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Quản lý tài khoản</title>
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-4">
+         <h1 class="text-success">@Model.mess</h1>
+        <h1>Quản lý tài khoản</h1>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Tên tài khoản</th>
+                    <th>Loại tài khoản</th>
+                    <th>Trạng thái</th>
+                    <th>Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (User u in listU)
+                {
+                    <form method="post">
+                    <tr>
+                        <input type="hidden" name="userId" value="@u.Id">
+                        <td>@u.Name</td>
+                        <td>
+                            <select name="RoleId" class="form-control" id="accountType_@u.Id">
+                                <option value="3" selected="@(u.RoleId == 3)">Mentor</option>
+                                <option value="2" selected="@(u.RoleId == 2)">User</option>
+                            </select>
+                        </td>
+
+                        <td>
+                            <select name="Status" class="form-control" id="accountActive_@u.Id">
+                                <option value="Ban" selected="@(u.Status == "Ban")">Ban</option>
+                                <option value="Active" selected="@(u.Status == "Active")">Active</option>
+                            </select>
+                        </td>
+
+
+                        <td>
+                            <button class="btn btn-primary" type="submit">Thực hiện</button>
+                        </td>
+                    </tr>
+                    </form>
+                }
+
+                <!-- Thêm các dòng khác tại đây cho các tài khoản khác -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Include Bootstrap JS và jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        function performAction(accountId) {
+            // Lấy giá trị của dropdown cho tài khoản có ID tương ứng (vd: accountType_1)
+            var selectElement = document.getElementById("accountType_" + accountId);
+            var selectedValue = selectElement.value;
+
+            // Xử lý tương ứng dựa trên giá trị đã chọn
+            if (selectedValue === "ban") {
+                // Thực hiện hành động ban cho tài khoản
+                alert("Ban tài khoản có ID " + accountId);
+            } else if (selectedValue === "upgrade") {
+                // Thực hiện hành động nâng cấp cho tài khoản
+                alert("Nâng cấp tài khoản có ID " + accountId);
+            }
+        }
+    </script>
+</body>
+</html>

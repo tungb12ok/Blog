@@ -1,0 +1,15 @@
+C:\Users\tungl\Downloads\Blog (1)\Blog\DataAccess\bin\Debug\net6.0\DataAccess.deps.json
+C:\Users\tungl\Downloads\Blog (1)\Blog\DataAccess\bin\Debug\net6.0\DataAccess.runtimeconfig.json
+C:\Users\tungl\Downloads\Blog (1)\Blog\DataAccess\bin\Debug\net6.0\DataAccess.dll
+C:\Users\tungl\Downloads\Blog (1)\Blog\DataAccess\bin\Debug\net6.0\DataAccess.pdb
+C:\Users\tungl\Downloads\Blog (1)\Blog\DataAccess\obj\Debug\net6.0\DataAccess.csproj.AssemblyReference.cache
+C:\Users\tungl\Downloads\Blog (1)\Blog\DataAccess\obj\Debug\net6.0\DataAccess.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\tungl\Downloads\Blog (1)\Blog\DataAccess\obj\Debug\net6.0\DataAccess.AssemblyInfoInputs.cache
+C:\Users\tungl\Downloads\Blog (1)\Blog\DataAccess\obj\Debug\net6.0\DataAccess.AssemblyInfo.cs
+C:\Users\tungl\Downloads\Blog (1)\Blog\DataAccess\obj\Debug\net6.0\DataAccess.csproj.CoreCompileInputs.cache
+C:\Users\tungl\Downloads\Blog (1)\Blog\DataAccess\obj\Debug\net6.0\DataAccess.sourcelink.json
+C:\Users\tungl\Downloads\Blog (1)\Blog\DataAccess\obj\Debug\net6.0\DataAccess.dll
+C:\Users\tungl\Downloads\Blog (1)\Blog\DataAccess\obj\Debug\net6.0\refint\DataAccess.dll
+C:\Users\tungl\Downloads\Blog (1)\Blog\DataAccess\obj\Debug\net6.0\DataAccess.pdb
+C:\Users\tungl\Downloads\Blog (1)\Blog\DataAccess\obj\Debug\net6.0\DataAccess.genruntimeconfig.cache
+C:\Users\tungl\Downloads\Blog (1)\Blog\DataAccess\obj\Debug\net6.0\ref\DataAccess.dll
